@@ -1,6 +1,9 @@
 import json
-from urlparse import urlparse
-
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    # py2
+    from urlparse import urlparse
 from marteau.fixtures import MarteauFixture
 from vaurienclient import Client
 

@@ -1,7 +1,10 @@
 import json
 from contextlib import contextmanager
-from urlparse import urlparse
-
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    # py2
+    from urlparse import urlparse
 import requests
 
 
@@ -62,13 +65,13 @@ def main():
     host, port = parts.netloc.split(':', -1)
     client = Client(host, port, scheme)
     if args.action == 'list-behaviors':
-        print ', '.join(client.list_behaviors())
+        print(', '.join(client.list_behaviors()))
     elif args.action == 'set-behavior':
         try:
             client.set_behavior(args.behavior)
-            print 'Behavior changed to "%s"' % args.behavior
+            print('Behavior changed to "%s"' % args.behavior)
         except ValueError:
-            print 'The request failed. Please use one of %s' %\
-                ', '.join(client.list_behaviors())
+            print('The request failed. Please use one of %s' %\
+                ', '.join(client.list_behaviors()))
     elif args.action == 'get-behavior':
-        print client.get_behavior()
+        print(client.get_behavior())
